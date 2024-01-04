@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -13,7 +14,7 @@ use Inertia\Inertia;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -24,12 +25,11 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
-});
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])
+    ->group(function () {
+        Route::get('/dashboard', function () {
+            return Inertia::render('Dashboard');
+        })->name('dashboard');
+    });
+
+Route::get('posts', [PostController::class, 'index'])->name('posts.index');
