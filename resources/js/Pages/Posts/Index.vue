@@ -1,14 +1,23 @@
 <template>
-    <AppLayout>
+    <AppLayout title="Posts">
         <Container>
             <ul class="divide-y">
-                <li v-for="post in posts.data" :key="post.id" class="px-2 py-4">
+                <li v-for="post in posts.data" :key="post.id">
                     <Link
-                        :href="route('posts.show', post)"
-                        class="text-lg font-bold"
+                        class="group block px-2 py-4"
+                        :href="route('posts.show', post.id)"
                     >
-                        {{ post.title }}</Link
-                    >
+                        <span
+                            class="text-lg font-bold transition-colors duration-200 group-hover:text-indigo-500"
+                        >
+                            {{ post.title }}</span
+                        >
+
+                        <span class="block pt-1 text-sm text-gray-600"
+                            >{{ formattedDate(post) }} ago by
+                            {{ post.user.name }}</span
+                        >
+                    </Link>
                 </li>
             </ul>
             <Pagination :meta="posts.meta" />
@@ -20,8 +29,13 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import Container from "@/Components/Container.vue";
 import Pagination from "@/Components/Pagination.vue";
+import { formatDistance, parseISO } from "date-fns";
 
 defineProps({
     posts: Object,
 });
+
+const formattedDate = (post) => {
+    return formatDistance(parseISO(post.created_at), new Date());
+};
 </script>
