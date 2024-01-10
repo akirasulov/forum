@@ -20,6 +20,8 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .use(Link, Head)
+            .component("Link", Link)
+            .component("Head", Head)
             .mount(el);
     },
     progress: {

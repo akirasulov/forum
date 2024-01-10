@@ -3,7 +3,12 @@
         <Container>
             <ul class="divide-y">
                 <li v-for="post in posts.data" :key="post.id" class="px-2 py-4">
-                    <span class="text-lg font-bold"> {{ post.title }}</span>
+                    <Link
+                        :href="route('posts.show', post)"
+                        class="text-lg font-bold"
+                    >
+                        {{ post.title }}</Link
+                    >
                 </li>
             </ul>
             <Pagination :meta="posts.meta" />
