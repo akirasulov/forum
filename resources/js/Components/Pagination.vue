@@ -5,12 +5,14 @@
         <div class="flex flex-1 justify-between sm:hidden">
             <Link
                 :href="previousUrl"
+                :only="only"
                 preserve-scroll
                 class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
                 >Previous</Link
             >
             <Link
                 :href="nextUrl"
+                :only="only"
                 preserve-scroll
                 class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
                 >Next</Link
@@ -44,6 +46,7 @@
                     <Link
                         v-for="(link, index) in meta.links"
                         :key="index"
+                        :only="only"
                         :href="link.url"
                         v-html="link.label"
                         preserve-scroll
@@ -67,7 +70,16 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/20/solid";
 import { Link } from "@inertiajs/vue3";
 import { computed } from "vue";
 
-const props = defineProps(["meta"]);
+const props = defineProps({
+    meta: {
+        type: Object,
+        required: true,
+    },
+    only: {
+        type: Array,
+        default: () => [],
+    },
+});
 
 const previousUrl = computed(() => props.meta.links[0].url);
 const nextUrl = computed(() => [...props.meta.links].reverse()[0].url);
