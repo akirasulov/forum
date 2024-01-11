@@ -7,7 +7,7 @@
             />
         </div>
         <div>
-            <p class="mt-1">{{ comment.body }}</p>
+            <p class="mt-1 break-all">{{ comment.body }}</p>
             <span
                 class="block pt-1 text-xs text-gray-600 first-letter:uppercase"
                 >By {{ comment.user.name }}
