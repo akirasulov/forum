@@ -26,6 +26,7 @@
                             id="body"
                             rows="4"
                             v-model="commentForm.body"
+                            @keydown.enter.exact.prevent="addComment"
                             placeholder="Speack your mind Boddy"
                         />
                         <InputError
