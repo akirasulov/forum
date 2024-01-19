@@ -47,7 +47,7 @@
                         :key="comment.id"
                         class="px-2 py-4"
                     >
-                        <Comment :comment="comment" />
+                        <Comment @delete="deleteComment" :comment="comment" />
                     </li>
                 </ul>
                 <Pagination :meta="comments.meta" :only="['comments']" />
@@ -81,4 +81,15 @@ const addComment = () =>
         preserveScroll: true,
         onSuccess: () => commentForm.reset(),
     });
+
+const deleteComment = (commentId) =>
+    router.delete(
+        route("comments.destroy", {
+            comment: commentId,
+            page: props.comments.meta.current_page,
+        }),
+        {
+            preserveScroll: true,
+        },
+    );
 </script>

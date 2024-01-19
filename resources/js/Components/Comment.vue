@@ -6,19 +6,23 @@
                 class="h-10 w-10 rounded-full"
             />
         </div>
-        <div>
+        <div class="flex-1">
             <p class="mt-1 break-all">{{ comment.body }}</p>
             <span
                 class="block pt-1 text-xs text-gray-600 first-letter:uppercase"
                 >By {{ comment.user.name }}
                 {{ relativeDate(comment.created_at) }} ago</span
             >
-            <div class="mt-1">
+            <div class="mt-2 text-right empty:hidden">
                 <form
                     v-if="comment.can?.delete"
-                    @submit.prevent="deleteComment"
+                    @submit.prevent="$emit('delete', comment.id)"
                 >
-                    <button>Delete</button>
+                    <button
+                        class="font-mono text-xs text-red-700 hover:font-semibold"
+                    >
+                        Delete
+                    </button>
                 </form>
             </div>
         </div>
@@ -32,8 +36,5 @@ import { computed } from "vue";
 
 const props = defineProps(["comment"]);
 
-const deleteComment = () =>
-    router.delete(route("comments.destroy", props.comment.id), {
-        preserveScroll: true,
-    });
+const emit = defineEmits(["delete"]);
 </script>
