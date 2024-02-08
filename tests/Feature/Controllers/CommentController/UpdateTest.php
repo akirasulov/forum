@@ -2,6 +2,7 @@
 
 use App\Models\Comment;
 use App\Models\User;
+use function Pest\Faker\fake;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\put;
 
@@ -58,5 +59,5 @@ it('requires a valid body', function ($body) {
     true,
     1,
     1.5,
-    str_repeat('a', 2501),
+    fake()->paragraph(2501),
 ]);

@@ -3,6 +3,7 @@
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
+use function Pest\Faker\fake;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\post;
 
@@ -44,5 +45,5 @@ it('requires a valid body', function () {
             'body' => null,
         ])
         ->assertInvalid('body')
-        ->with([null, 1, 1.5, true, str_repeat('a', 2501)]);
+        ->with([null, 1, 1.5, true, fake()->paragraph(2501)]);
 });

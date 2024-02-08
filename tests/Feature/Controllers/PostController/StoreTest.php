@@ -11,10 +11,6 @@ beforeEach(function () {
         'title' => fake()->sentence(6),
         'body' => fake()->paragraph(100),
     ];
-    // $this->validData = [
-    //     'title' => fake()->title(15),
-    //     'body' => fake()->text(100),
-    // ];
 });
 
 it('requires authentication', function () {
@@ -49,12 +45,12 @@ it('requires valid data', function (array $badData, array | string $errors) {
     [['title' => true], 'title'],
     [['title' => 1], 'title'],
     [['title' => 1.5], 'title'],
-    [['title' => str_repeat('a', 121)], 'title'],
-    [['title' => str_repeat('a', 9)], 'title'],
+    [['title' => fake()->paragraph(121)], 'title'],
+    [['title' => fake()->text(9)], 'title'],
     [['body' => null], 'body'],
     [['body' => true], 'body'],
     [['body' => 1], 'body'],
     [['body' => 1.5], 'body'],
-    [['body' => str_repeat('a', 10_001)], 'body'],
-    [['body' => str_repeat('a', 99)], 'body'],
+    [['body' => fake()->paragraph(10_001)], 'body'],
+    [['body' => fake()->text(99)], 'body'],
 ]);
