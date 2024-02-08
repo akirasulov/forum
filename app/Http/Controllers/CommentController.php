@@ -32,7 +32,8 @@ class CommentController extends Controller
         //     ->post()->associate($post)
         //     ->save();
 
-        return to_route('posts.show', $post);
+        return to_route('posts.show', $post)
+            ->banner('Comment added.');
     }
 
     /**
@@ -46,7 +47,8 @@ class CommentController extends Controller
         return to_route('posts.show', [
             'post' => $comment->post_id,
             'page' => $request->query('page'),
-        ]);
+        ])
+            ->banner('Comment updated.');
     }
 
     /**
@@ -59,6 +61,7 @@ class CommentController extends Controller
         return to_route('posts.show', [
             'post' => $comment->post_id,
             'page' => $request->query('page'),
-        ]);
+        ])
+            ->banner('Comment Deleted.');
     }
 }
