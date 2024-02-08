@@ -1,12 +1,16 @@
 <template>
     <AppLayout :title="post.title">
         <Container>
-            <h1 class="text-2xl font-bold">{{ post.title }}</h1>
-            <span class="mt-1 block text-sm text-gray-600"
-                >{{ formattedDate }} ago by {{ post.user.name }}</span
+            <p class="text-base font-semibold leading-7 text-indigo-600">
+                {{ formattedDate }} ago by {{ post.user.name }}
+            </p>
+            <h1
+                class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
             >
+                {{ post.title }}
+            </h1>
 
-            <article class="mt-6">
+            <article class="mt-6 leading-7">
                 <pre class="whitespace-pre-wrap font-sans">{{ post.body }}</pre>
             </article>
 
