@@ -44,7 +44,11 @@
                         </div>
                         <div class="relative mt-8 flex items-center gap-x-4">
                             <img
-                                :src="`https://ui-avatars.com/api/?backgroud=0D8ABC&color=fff&name=${post.user.name}`"
+                                :src="
+                                    post.user.profile_photo_url ??
+                                    'https://ui-avatars.com/api/?backgroud=0D8ABC&color=fff&name='
+                                        .post.user.name
+                                "
                                 alt=""
                                 class="h-10 w-10 rounded-full bg-gray-50"
                             />
