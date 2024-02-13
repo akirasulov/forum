@@ -31,7 +31,7 @@
                             <h3
                                 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600"
                             >
-                                <Link :href="route('posts.show', post.id)">
+                                <Link :href="post.routes.show">
                                     <span class="absolute inset-0" />
                                     {{ post.title }}
                                 </Link>
