@@ -54,7 +54,7 @@
                             />
                             <div class="text-sm leading-6">
                                 <p class="font-semibold text-gray-900">
-                                    <Link :href="route('posts.show', post.id)">
+                                    <Link :href="post.routes.show">
                                         <span class="absolute inset-0" />
                                         {{ post.user.name }}
                                     </Link>
