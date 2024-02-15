@@ -3,7 +3,6 @@
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use function Pest\Laravel\get;
-use Inertia\Testing\AssertableInertia;
 
 it('should return the correct component', function () {
     get(route('posts.index'))

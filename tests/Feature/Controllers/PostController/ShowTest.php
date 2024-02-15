@@ -5,18 +5,18 @@ use App\Http\Resources\PostResource;
 use App\Models\Comment;
 use App\Models\Post;
 use function Pest\Laravel\get;
-use Inertia\Testing\AssertableInertia;
+
 it('can show a post', function () {
     $post = Post::factory()->create();
 
-    get(route('posts.show', $post))
+    get($post->showRoute())
         ->assertComponent('Posts/Show');
 });
 
 it('passes a post to the view', function () {
     $post = Post::factory()->create();
 
-    get(route('posts.show', $post))
+    get($post->showRoute())
         ->assertHasResource('post', PostResource::make($post->load('user')));
 });
 
@@ -26,6 +26,12 @@ it('passes comments to the view', function () {
 
     $comments->load('user');
 
-    get(route('posts.show', $post))
+    get($post->showRoute())
         ->assertHasPaginatedResource('comments', CommentResource::collection($comments->reverse()));
+});
+
+it('will redirect if the slug is invalid', function () {
+    $post = Post::factory()->create(['title' => 'Hello world']);
+    get(route('posts.show', [$post, 'foo', 'page' => 2]))
+        ->assertRedirect($post->showRoute(['page' => 2]));
 });

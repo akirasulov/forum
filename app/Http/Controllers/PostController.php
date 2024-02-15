@@ -46,8 +46,7 @@ class PostController extends Controller
 
         $post = $request->user()->posts()->create($data);
 
-        return redirect($post->showRoute())
-            ->banner('Post added.');
+        return redirect($post->showRoute());
     }
 
     /**
