@@ -32,7 +32,8 @@ class DatabaseSeeder extends Seeder
             ->recycle($posts)
             ->create([
                 'name' => 'Aki Rasulov',
-                'email' => 'aki@example.com',
+                'email' => 'akirasulov2323@gmail.com',
+                'password' => bcrypt('password'),
             ]);
     }
 }

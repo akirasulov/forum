@@ -47,13 +47,15 @@
                                 >Body</InputLabel
                             >
                             <div class="mt-2">
-                                <TextArea
+                                <MarkdownEditor v-model="form.body" />
+
+                                <!-- <TextArea
                                     id="body"
                                     v-model="form.body"
                                     rows="10"
                                     placeholder="Write a few sentences about your post."
                                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                ></TextArea>
+                                ></TextArea> -->
                                 <InputError
                                     class="mt-1"
                                     :message="form.errors.body"
@@ -77,6 +79,7 @@
 import Container from "@/Components/Container.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
+import MarkdownEditor from "@/Components/MarkdownEditor.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextArea from "@/Components/TextArea.vue";
 import TextInput from "@/Components/TextInput.vue";
