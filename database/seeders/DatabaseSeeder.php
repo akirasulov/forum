@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             ->create();
 
         $posts = Post::factory(200)
+            ->withFixture()
             ->has(Comment::factory(15)->recycle($users))
             ->recycle($users)
             ->create();
@@ -27,7 +28,7 @@ class DatabaseSeeder extends Seeder
         $comments = Comment::factory(100)->recycle($users)->recycle($posts)->create();
 
         $aki = User::factory()
-            ->has(Post::factory(45))
+            ->has(Post::factory(45)->withFixture())
             ->has(Comment::factory(120))
             ->recycle($posts)
             ->create([
@@ -36,4 +37,5 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('password'),
             ]);
     }
+
 }
