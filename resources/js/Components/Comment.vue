@@ -7,7 +7,11 @@
             />
         </div>
         <div class="flex-1">
-            <p class="mt-1 break-all">{{ comment.body }}</p>
+            <div
+                class="prose prose-sm mt-1 max-w-none"
+                v-html="comment.html"
+            ></div>
+
             <span
                 class="block pt-1 text-xs text-gray-600 first-letter:uppercase"
                 >By {{ comment.user.name }}

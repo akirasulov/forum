@@ -32,12 +32,12 @@
                         <InputLabel for="body" class="sr-only"
                             >Comment</InputLabel
                         >
-                        <TextArea
+                        <MarkdownEditor
                             ref="commentTextAreaRef"
                             id="body"
-                            rows="4"
                             v-model="commentForm.body"
                             @keydown.enter.exact.prevent="addComment"
+                            editorClass="min-h-[160px]"
                             placeholder="Speack your mind Boddy"
                         />
                         <InputError
@@ -95,6 +95,7 @@ import { router, useForm } from "@inertiajs/vue3";
 import TextArea from "@/Components/TextArea.vue";
 import InputError from "@/Components/InputError.vue";
 import { useConfirm } from "@/Utilities/Composables/useConfirm.js";
+import MarkdownEditor from "@/Components/MarkdownEditor.vue";
 
 const props = defineProps(["post", "comments"]);
 
