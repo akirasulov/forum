@@ -18,7 +18,7 @@
                     <article
                         v-for="post in posts.data"
                         :key="post.id"
-                        class="flex max-w-xl flex-col items-start justify-between rounded-md outline-offset-8 outline-gray-200 hover:outline"
+                        class="flex max-w-xl flex-col items-start justify-between rounded-lg p-4 transition-colors duration-300 hover:bg-gray-100"
                     >
                         <div class="flex items-center gap-x-4 text-xs">
                             <time
@@ -42,6 +42,12 @@
                                 {{ post.body }}
                             </p>
                         </div>
+                        <Link
+                            href="/"
+                            class="mt-5 line-clamp-3 rounded-full border border-pink-500 px-2 text-sm leading-6 text-pink-500"
+                        >
+                            {{ post.topic.slug }}
+                        </Link>
                         <div class="relative mt-8 flex items-center gap-x-4">
                             <img
                                 :src="
@@ -74,6 +80,7 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import Container from "@/Components/Container.vue";
 import Pagination from "@/Components/Pagination.vue";
 import { relativeDate } from "@/Utilities/date.js";
+import { Link } from "@inertiajs/vue3";
 defineProps({
     posts: Object,
 });
