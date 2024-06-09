@@ -2,9 +2,24 @@
     <AppLayout title="Posts">
         <section class="bg-white">
             <Container>
+                <!-- <PageHeading> Create a Post </PageHeading> -->
                 <div class="mx-auto max-w-2xl lg:mx-0">
+                    <!-- <Link class="" :href="route('posts.index')"
+                        >Back to all post</Link
+                    > -->
+                    <PageHeading
+                        v-text="
+                            selectedTopic ? selectedTopic.name : 'All Posts'
+                        "
+                    />
+                    <!-- <p
+                        v-if="selectedTopic"
+                        class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
+                    >
+                        {{ selectedTopic.description }}
+                    </p> -->
                     <h2
-                        class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
+                        class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
                     >
                         From the blog
                     </h2>
@@ -43,7 +58,9 @@
                             </p>
                         </div>
                         <Link
-                            href="/"
+                            :href="
+                                route('posts.index', { topic: post.topic.slug })
+                            "
                             class="mt-5 line-clamp-3 rounded-full border border-pink-500 px-2 text-sm leading-6 text-pink-500"
                         >
                             {{ post.topic.slug }}
@@ -83,6 +100,7 @@ import { relativeDate } from "@/Utilities/date.js";
 import { Link } from "@inertiajs/vue3";
 defineProps({
     posts: Object,
+    selectedTopic: Object,
 });
 
 const formattedDate = (post) => relativeDate(post.created_at);

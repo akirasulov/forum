@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call(TopicSeeder::class);
+
         $topics = Topic::all();
 
         $users = User::factory(10)
@@ -30,7 +31,7 @@ class DatabaseSeeder extends Seeder
             ->recycle([$users, $topics])
             ->create();
 
-        $comments = Comment::factory(100)->recycle($users)->recycle($posts)->create();
+        // $comments = Comment::factory(100)->recycle($users)->recycle($posts)->create();
 
         $aki = User::factory()
             ->has(Post::factory(45)->recycle($topics)->withFixture())
