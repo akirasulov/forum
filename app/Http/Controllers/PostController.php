@@ -30,6 +30,7 @@ class PostController extends Controller
             ->paginate();
 
         return inertia('Posts/Index', [
+            'topics' => fn() => TopicResource::collection(Topic::all()),
             'posts' => PostResource::collection($posts),
             'selectedTopic' => fn() => $topic ? TopicResource::make($topic) : null,
         ]);

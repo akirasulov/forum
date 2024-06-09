@@ -2,22 +2,24 @@
     <AppLayout title="Posts">
         <section class="bg-white">
             <Container>
-                <!-- <PageHeading> Create a Post </PageHeading> -->
                 <div class="mx-auto max-w-2xl lg:mx-0">
-                    <!-- <Link class="" :href="route('posts.index')"
+                    <Link
+                        v-if="selectedTopic"
+                        class="underline"
+                        :href="route('posts.index')"
                         >Back to all post</Link
-                    > -->
-                    <PageHeading
+                    >
+                    <!-- <PageHeading
                         v-text="
                             selectedTopic ? selectedTopic.name : 'All Posts'
                         "
-                    />
-                    <!-- <p
+                    /> -->
+                    <p
                         v-if="selectedTopic"
                         class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
                     >
                         {{ selectedTopic.description }}
-                    </p> -->
+                    </p>
                     <h2
                         class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
                     >
@@ -26,6 +28,27 @@
                     <p class="mt-2 text-lg leading-8 text-gray-600">
                         Learn how to grow your business with our expert advice.
                     </p>
+                    <menu class="flex space-x-2 overflow-x-auto pb-3 pt-1">
+                        <li>
+                            <Pill
+                                :filled="!selectedTopic"
+                                :href="route('posts.index')"
+                                >All Posts</Pill
+                            >
+                        </li>
+                        <li v-for="topic in topics" :key="topic.id">
+                            <Pill
+                                :filled="selectedTopic?.id === topic.id"
+                                :href="
+                                    route('posts.index', {
+                                        topic: topic.slug,
+                                    })
+                                "
+                            >
+                                {{ topic.name }}
+                            </Pill>
+                        </li>
+                    </menu>
                 </div>
                 <div
                     class="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3"
@@ -57,14 +80,14 @@
                                 {{ post.body }}
                             </p>
                         </div>
-                        <Link
+                        <Pill
                             :href="
                                 route('posts.index', { topic: post.topic.slug })
                             "
                             class="mt-5 line-clamp-3 rounded-full border border-pink-500 px-2 text-sm leading-6 text-pink-500"
                         >
                             {{ post.topic.slug }}
-                        </Link>
+                        </Pill>
                         <div class="relative mt-8 flex items-center gap-x-4">
                             <img
                                 :src="
@@ -95,11 +118,14 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import Container from "@/Components/Container.vue";
+import Pill from "@/Components/Pill.vue";
+import PageHeading from "@/Components/PageHeading.vue";
 import Pagination from "@/Components/Pagination.vue";
 import { relativeDate } from "@/Utilities/date.js";
 import { Link } from "@inertiajs/vue3";
 defineProps({
     posts: Object,
+    topics: Object,
     selectedTopic: Object,
 });
 
