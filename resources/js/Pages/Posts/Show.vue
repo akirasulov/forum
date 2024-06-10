@@ -1,4 +1,7 @@
 <template>
+    <Head>
+        <link rel="cannonical" :href="post.routes.show" />
+    </Head>
     <AppLayout :title="post.title">
         <Container>
             <Pill :href="route('posts.index', { topic: post.topic.slug })">
@@ -6,7 +9,7 @@
             >
             <PageHeading> {{ post.title }}</PageHeading>
             <p class="text-base font-semibold leading-7 text-indigo-600">
-                {{ formattedDate }} ago by {{ post.user.name }}
+                {{ formattedDate }} by {{ post.user.name }}
             </p>
             <h1
                 class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
@@ -41,7 +44,7 @@
                             id="body"
                             v-model="commentForm.body"
                             @keydown.enter.exact.prevent="addComment"
-                            editorClass="min-h-[160px]"
+                            editorClass="!min-h-[160px]"
                             placeholder="Speack your mind Boddy"
                         />
                         <InputError
@@ -167,7 +170,10 @@ const deleteComment = async (commentId) => {
     router.delete(
         route("comments.destroy", {
             comment: commentId,
-            page: props.comments.meta.current_page,
+            page:
+                props.comments.data.length > 1
+                    ? props.comments.meta.current_page
+                    : Math.max(props.comments.meta.current_page - 1, 1),
         }),
         {
             preserveScroll: true,

@@ -62,8 +62,8 @@
                             <time
                                 :datetime="post.datetime"
                                 class="text-gray-500"
-                                >{{ formattedDate(post) }} ago</time
-                            >
+                                >{{ formattedDate(post) }}
+                            </time>
                         </div>
                         <div class="group relative">
                             <h3
