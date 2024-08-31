@@ -29,7 +29,9 @@ it('can filter to a topic', function () {
     $general = Topic::factory()->create();
     $posts = Post::factory(2)->for($general)->create();
     $otherPosts = Post::factory(3)->create();
-    $posts->load(['user', 'topic', ['topic' => $general]]);
+
+    $posts->load(['user', 'topic']);
+
     get(route('posts.index', ['topic' => $general]))
         ->assertHasPaginatedResource('posts', PostResource::collection($posts->reverse()));
 });

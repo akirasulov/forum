@@ -17,6 +17,12 @@
                 {{ post.title }}
             </h1>
 
+            <div class="mt-4">
+                <span class="font-bold text-pink-500"
+                    >{{ post.likes_count }} likes</span
+                >
+            </div>
+
             <article
                 class="prose prose-sm mt-6 max-w-none"
                 v-html="post.html"
