@@ -26,6 +26,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::resource('posts.comments', CommentController::class)->shallow()->only(['store', 'update', 'destroy']);
 
         Route::post('/likes/{type}/{id}', [LikeController::class, 'store'])->name('likes.store');
+        Route::delete('/likes/{type}/{id}', [LikeController::class, 'destroy'])->name('likes.destroy');
     });
 
 Route::get('posts/{topic?}', [PostController::class, 'index'])
