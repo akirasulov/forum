@@ -9,17 +9,17 @@
                         :href="route('posts.index')"
                         >Back to all post</Link
                     >
-                    <!-- <PageHeading
+                    <PageHeading
                         v-text="
                             selectedTopic ? selectedTopic.name : 'All Posts'
                         "
-                    /> -->
-                    <p
+                    />
+                    <!-- <p
                         v-if="selectedTopic"
                         class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
                     >
                         {{ selectedTopic.description }}
-                    </p>
+                    </p> -->
                     <h2
                         class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
                     >
@@ -31,8 +31,12 @@
                     <menu class="flex space-x-2 overflow-x-auto pb-3 pt-1">
                         <li>
                             <Pill
+                                :href="
+                                    route('posts.index', {
+                                        query: searchForm.query,
+                                    })
+                                "
                                 :filled="!selectedTopic"
-                                :href="route('posts.index')"
                                 >All Posts</Pill
                             >
                         </li>
@@ -42,6 +46,7 @@
                                 :href="
                                     route('posts.index', {
                                         topic: topic.slug,
+                                        query: searchForm.query,
                                     })
                                 "
                             >
@@ -60,6 +65,11 @@
                                 />
                                 <SecondaryButton type="submit"
                                     >Search</SecondaryButton
+                                >
+                                <DangerButton
+                                    v-if="searchForm.query"
+                                    @click.prevent="clearSearch"
+                                    >Clear</DangerButton
                                 >
                             </div>
                         </div>
@@ -140,7 +150,8 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Pagination from "@/Components/Pagination.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { relativeDate } from "@/Utilities/date.js";
-import { Link, useForm } from "@inertiajs/vue3";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
+import DangerButton from "@/Components/DangerButton.vue";
 const props = defineProps({
     posts: Object,
     topics: Object,
@@ -151,6 +162,12 @@ const props = defineProps({
 const formattedDate = (post) => relativeDate(post.created_at);
 const searchForm = useForm({
     query: props.query,
+    page: 1,
 });
-const search = () => searchForm.get(route("posts.index"));
+const page = usePage();
+const search = () => searchForm.get(page.url);
+const clearSearch = () => {
+    searchForm.query = "";
+    search();
+};
 </script>
