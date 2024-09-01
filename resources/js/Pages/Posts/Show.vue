@@ -21,6 +21,28 @@
                 <span class="font-bold text-pink-500"
                     >{{ post.likes_count }} likes</span
                 >
+                <div v-if="$page.props.auth.user" class="mt-2">
+                    <Link
+                        v-if="post.can.like"
+                        method="Post"
+                        :href="route('likes.store', ['post', post.id])"
+                        preserve-scroll
+                        class="inline-block rounded-full bg-indigo-600 px-3 py-1.5 text-white transition-colors duration-300 hover:bg-pink-500"
+                    >
+                        <HandThumbUpIcon class="mr-1 inline-block size-5" />
+                        Like Post
+                    </Link>
+                    <Link
+                        v-else
+                        method="Delete"
+                        :href="route('likes.destroy', ['post', post.id])"
+                        preserve-scroll
+                        class="inline-block rounded-full bg-indigo-600 px-3 py-1.5 text-white transition-colors duration-300 hover:bg-pink-500"
+                    >
+                        <HandThumbDownIcon class="mr-1 inline-block size-5" />
+                        Unlike Post
+                    </Link>
+                </div>
             </div>
 
             <article
@@ -110,6 +132,7 @@ import { router, useForm } from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
 import { useConfirm } from "@/Utilities/Composables/useConfirm.js";
 import MarkdownEditor from "@/Components/MarkdownEditor.vue";
+import { HandThumbUpIcon, HandThumbDownIcon } from "@heroicons/vue/20/solid";
 
 const props = defineProps(["post", "comments"]);
 

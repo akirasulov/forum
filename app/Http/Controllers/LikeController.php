@@ -36,11 +36,9 @@ class LikeController extends Controller
     public function destroy(Request $request, string $type, int $id)
     {
         $likeable = $this->findLikeable($type, $id);
-
         $this->authorize('delete', [Like::class, $likeable]);
 
-        $likeable->likes()->whereBelongTo($request->user())->delete();
-
+        $likeable->likes()->whereBelongsTo($request->user())->delete();
         $likeable->decrement('likes_count');
 
         return back();

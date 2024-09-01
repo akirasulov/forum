@@ -2,12 +2,22 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Like;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Number;
 
 class CommentResource extends JsonResource
 {
+    private bool $withLikePermission = false;
+
+    public function withLikePermission(): self
+    {
+        $this->withLikePermission = true;
+
+        return $this;
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -25,6 +35,7 @@ class CommentResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'can' => [
+                'like' => $this->when($this->withLikePermission, fn () => $request->user()?->can('create', [Like::class, $this->resource])),
                 'update' => $request->user()?->can('update', $this->resource), //$this->resource == comment model
                 'delete' => $request->user()?->can('delete', $this->resource), //$this->resource == comment model
             ],
