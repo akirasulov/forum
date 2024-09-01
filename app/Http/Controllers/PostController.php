@@ -21,18 +21,22 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(?Topic $topic = null)
+    public function index(Request $request, Topic $topic = null)
     {
         $posts = Post::with(['user', 'topic'])
-            ->when($topic, fn (Builder $query) => $query->whereBelongsTo($topic))
+            ->when($topic, fn(Builder $query) => $query->whereBelongsTo($topic))
+            ->when($request->query('query'),
+                fn(Builder $query) =>
+                $query->whereAny(['title', 'body'], 'like', '%' . $request->query('query') . '%'))
             ->latest()
             ->latest('id')
             ->paginate();
 
         return inertia('Posts/Index', [
-            'topics' => fn () => TopicResource::collection(Topic::all()),
+            'topics' => fn() => TopicResource::collection(Topic::all()),
             'posts' => PostResource::collection($posts),
-            'selectedTopic' => fn () => $topic ? TopicResource::make($topic) : null,
+            'selectedTopic' => fn() => $topic ? TopicResource::make($topic) : null,
+            'query' => $request->query('query'),
         ]);
     }
 
@@ -42,7 +46,7 @@ class PostController extends Controller
     public function create()
     {
         return inertia('Posts/Create', [
-            'topics' => fn () => TopicResource::collection(Topic::all()),
+            'topics' => fn() => TopicResource::collection(Topic::all()),
         ]);
     }
 
@@ -67,17 +71,17 @@ class PostController extends Controller
      */
     public function show(Request $request, Post $post)
     {
-        if (! Str::endsWith($post->showRoute(), $request->path())) {
+        if (!Str::endsWith($post->showRoute(), $request->path())) {
             return redirect($post->showRoute($request->query()), status: 301);
         }
 
         $post->load('user', 'topic');
 
         return inertia('Posts/Show', [
-            'post' => fn () => PostResource::make($post)->withLikePermission(),
+            'post' => fn() => PostResource::make($post)->withLikePermission(),
             'comments' => function () use ($post) {
                 $commentResource = CommentResource::collection($post->comments()->with('user')->latest()->latest('id')->paginate(10));
-                $commentResource->collection->transform(fn ($resource) => $resource->withLikePermission());
+                $commentResource->collection->transform(fn($resource) => $resource->withLikePermission());
 
                 return $commentResource;
             },

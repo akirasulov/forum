@@ -49,6 +49,21 @@
                             </Pill>
                         </li>
                     </menu>
+                    <form @submit.prevent="search" class="mt-4">
+                        <div>
+                            <InputLabel for="query">Search</InputLabel>
+                            <div class="mt-1 flex space-x-2">
+                                <TextInput
+                                    v-model="searchForm.query"
+                                    class="w-full"
+                                    id="query"
+                                />
+                                <SecondaryButton type="submit"
+                                    >Search</SecondaryButton
+                                >
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div
                     class="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3"
@@ -120,14 +135,22 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import Container from "@/Components/Container.vue";
 import Pill from "@/Components/Pill.vue";
 import PageHeading from "@/Components/PageHeading.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Pagination from "@/Components/Pagination.vue";
+import TextInput from "@/Components/TextInput.vue";
 import { relativeDate } from "@/Utilities/date.js";
-import { Link } from "@inertiajs/vue3";
-defineProps({
+import { Link, useForm } from "@inertiajs/vue3";
+const props = defineProps({
     posts: Object,
     topics: Object,
     selectedTopic: Object,
+    query: String,
 });
 
 const formattedDate = (post) => relativeDate(post.created_at);
+const searchForm = useForm({
+    query: props.query,
+});
+const search = () => searchForm.get(route("posts.index"));
 </script>
