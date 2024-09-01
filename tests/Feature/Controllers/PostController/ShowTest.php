@@ -4,7 +4,6 @@ use App\Http\Resources\CommentResource;
 use App\Http\Resources\PostResource;
 use App\Models\Comment;
 use App\Models\Post;
-
 use function Pest\Laravel\get;
 
 it('can show a post', function () {
@@ -20,7 +19,7 @@ it('passes a post to the view', function () {
     $post->load(['user', 'topic', 'likes']);
 
     get($post->showRoute())
-        ->assertHasResource('post', PostResource::make($post->load('user')));
+        ->assertHasResource('post', PostResource::make($post->load('user'))->withLikePermission());
 });
 
 it('passes comments to the view', function () {
@@ -29,8 +28,12 @@ it('passes comments to the view', function () {
 
     $comments->load('user');
 
+    $expectedResource = CommentResource::collection($comments->reverse());
+
+    $expectedResource->collection->transform(fn($resource) => $resource->withLikePermission());
+
     get($post->showRoute())
-        ->assertHasPaginatedResource('comments', CommentResource::collection($comments->reverse()));
+        ->assertHasPaginatedResource('comments', $expectedResource);
 });
 
 it('will redirect if the slug is invalid', function (string $invalidSlug) {
