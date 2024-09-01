@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Comment extends Model
 {
-    use HasFactory;
     use ConvertsMarkdownToHtml;
+    use HasFactory;
 
     public function user(): BelongsTo
     {
@@ -22,9 +22,9 @@ class Comment extends Model
     {
         return $this->belongsTo(Post::class);
     }
+
     public function likes(): MorphMany
     {
         return $this->morphMany(Like::class, 'likeable');
     }
-
 }

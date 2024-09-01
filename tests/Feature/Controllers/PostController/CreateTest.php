@@ -3,6 +3,7 @@
 use App\Http\Resources\TopicResource;
 use App\Models\Topic;
 use App\Models\User;
+
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
 

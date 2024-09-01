@@ -13,8 +13,8 @@ use Illuminate\Support\Str;
 
 class Post extends Model
 {
-    use HasFactory;
     use ConvertsMarkdownToHtml;
+    use HasFactory;
 
     public function user(): BelongsTo
     {
@@ -38,7 +38,7 @@ class Post extends Model
 
     public function title(): Attribute
     {
-        return Attribute::set(fn($value) => Str::title($value));
+        return Attribute::set(fn ($value) => Str::title($value));
     }
 
     public function showRoute(array $parameters = [])

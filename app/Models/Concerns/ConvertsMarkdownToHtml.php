@@ -9,7 +9,7 @@ trait ConvertsMarkdownToHtml
         static::saving(function (self $model) {
             $markdownData = collect(self::getMarkdownToHtmlMap())
                 ->flip()
-                ->map(fn($bodyColumn) => str($model->$bodyColumn)->markdown([
+                ->map(fn ($bodyColumn) => str($model->$bodyColumn)->markdown([
                     'html_input' => 'strip',
                     'allow_unsafe_links' => false,
                     'max_nesting_level' => 5,

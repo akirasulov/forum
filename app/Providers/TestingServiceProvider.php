@@ -23,7 +23,7 @@ class TestingServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (!$this->app->runningUnitTests()) {
+        if (! $this->app->runningUnitTests()) {
             return;
         }
 
@@ -42,15 +42,15 @@ class TestingServiceProvider extends ServiceProvider
         });
 
         TestResponse::macro('assertHasResource', function (string $key, JsonResource $resource) {
-            return $this->assertInertia(fn(AssertableInertia $inertia) => $inertia->hasResource($key, $resource));
+            return $this->assertInertia(fn (AssertableInertia $inertia) => $inertia->hasResource($key, $resource));
         });
 
         TestResponse::macro('assertHasPaginatedResource', function (string $key, ResourceCollection $resource) {
-            return $this->assertInertia(fn(AssertableInertia $inertia) => $inertia->hasPaginatedResource($key, $resource));
+            return $this->assertInertia(fn (AssertableInertia $inertia) => $inertia->hasPaginatedResource($key, $resource));
         });
 
         TestResponse::macro('assertComponent', function (string $component) {
-            return $this->assertInertia(fn(AssertableInertia $inertia) => $inertia->component($component, true));
+            return $this->assertInertia(fn (AssertableInertia $inertia) => $inertia->component($component, true));
         });
     }
 }

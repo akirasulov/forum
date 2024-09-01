@@ -1,4 +1,5 @@
 <?php
+
 use App\Support\PostFixtures;
 use Illuminate\Support\Facades\Route;
 
@@ -8,4 +9,5 @@ Route::middleware('api')->group(function () {
     });
 });
 
-Route::middleware('web')->group(function () {});
+Route::middleware('web')->group(function () {
+});

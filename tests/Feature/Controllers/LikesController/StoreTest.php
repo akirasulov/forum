@@ -27,8 +27,8 @@ it('allows liking a likeabke', function (Model $likeable) {
     expect($likeable->fresh()->likes_count)->toBe(1);
 
 })->with([
-    fn() => Post::factory()->create(),
-    fn() => Comment::factory()->create(),
+    fn () => Post::factory()->create(),
+    fn () => Comment::factory()->create(),
 ]);
 
 it('prevents liking the same likeable twice', function () {

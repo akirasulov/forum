@@ -7,7 +7,6 @@ use App\Models\User;
 
 class CommentPolicy
 {
-
     /**
      * Determine whether the user can create models.
      */
@@ -35,5 +34,4 @@ class CommentPolicy
 
         return $comment->created_at->isAfter(now()->subHour());
     }
-
 }

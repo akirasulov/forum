@@ -4,9 +4,10 @@ namespace Database\Seeders;
 
 use App\Models\Like;
 use App\Models\Post;
-use function Laravel\Prompts\progress;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\LazyCollection;
+
+use function Laravel\Prompts\progress;
 
 class LikeLoadTestSeeder extends Seeder
 {

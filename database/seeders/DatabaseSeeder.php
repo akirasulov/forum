@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
             ->has(Post::factory(45)->recycle($topics)->withFixture())
             ->has(Comment::factory(120)->recycle($posts))
             ->has(Like::factory()->forEachSequence(
-                ...$posts->random(100)->map(fn(Post $post) => ['likeable_id' => $post]),
+                ...$posts->random(100)->map(fn (Post $post) => ['likeable_id' => $post]),
             ))
             ->create([
                 'name' => 'Aki Rasulov',
@@ -46,5 +46,4 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('password'),
             ]);
     }
-
 }

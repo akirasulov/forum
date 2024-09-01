@@ -25,8 +25,8 @@ it('allows liking a likeable', function (Model $likeable) {
     ]);
     expect($likeable->refresh()->likes_count)->toBe(1);
 })->with([
-    fn() => Post::factory()->create(),
-    fn() => Comment::factory()->create(),
+    fn () => Post::factory()->create(),
+    fn () => Comment::factory()->create(),
 ]);
 
 it('prevents unliking you have not like', function () {
